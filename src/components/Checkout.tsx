@@ -1,9 +1,14 @@
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { ArrowLeft, Check, CreditCard, Truck, Shield } from 'lucide-react';
 
 const Checkout = () => {
+  // Scroll to top when component mounts
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   const [currentStep, setCurrentStep] = useState(1);
   const [formData, setFormData] = useState({
     email: '',
@@ -13,7 +18,7 @@ const Checkout = () => {
     city: '',
     state: '',
     zipCode: '',
-    country: 'United States',
+    country: 'India',
     saveInfo: false,
     shippingMethod: 'standard',
     paymentMethod: 'card',
@@ -27,7 +32,7 @@ const Checkout = () => {
     {
       id: 1,
       name: "Silk Midi Dress",
-      price: 420,
+      price: 2500,
       image: "https://images.unsplash.com/photo-1515372039744-b8f02a3ae446?ixlib=rb-4.0.3&auto=format&fit=crop&w=200&q=80",
       size: "M",
       color: "Black",
@@ -36,7 +41,7 @@ const Checkout = () => {
     {
       id: 2,
       name: "Cashmere Blazer",
-      price: 680,
+      price: 4200,
       image: "https://images.unsplash.com/photo-1594633312681-425c7b97ccd1?ixlib=rb-4.0.3&auto=format&fit=crop&w=200&q=80",
       size: "S",
       color: "Navy",
@@ -44,10 +49,10 @@ const Checkout = () => {
     }
   ];
 
-  const subtotal = 1100;
+  const subtotal = 6700;
   const shipping = 0;
-  const tax = 88;
-  const total = 1188;
+  const tax = 536;
+  const total = 7236;
 
   const steps = [
     { id: 1, name: 'Shipping', icon: Truck },
@@ -287,7 +292,7 @@ const Checkout = () => {
                         <div className="ml-3 flex-1">
                           <div className="flex justify-between">
                             <span className="font-medium">Express Shipping</span>
-                            <span>$15</span>
+                            <span>₹100</span>
                           </div>
                           <p className="text-sm text-gray-600">2-3 business days</p>
                         </div>
@@ -478,7 +483,7 @@ const Checkout = () => {
                       {item.size} • {item.color} • Qty {item.quantity}
                     </p>
                   </div>
-                  <span className="font-semibold text-black">${item.price}</span>
+                  <span className="font-semibold text-black">₹{item.price}</span>
                 </div>
               ))}
             </div>
@@ -487,20 +492,20 @@ const Checkout = () => {
             <div className="space-y-3 pt-6 border-t border-gray-200">
               <div className="flex justify-between">
                 <span className="text-gray-600">Subtotal</span>
-                <span className="font-semibold">${subtotal}</span>
+                <span className="font-semibold">₹{subtotal}</span>
               </div>
               <div className="flex justify-between">
                 <span className="text-gray-600">Shipping</span>
-                <span className="font-semibold">{shipping === 0 ? 'Free' : `$${shipping}`}</span>
+                <span className="font-semibold">{shipping === 0 ? 'Free' : `₹${shipping}`}</span>
               </div>
               <div className="flex justify-between">
                 <span className="text-gray-600">Tax</span>
-                <span className="font-semibold">${tax}</span>
+                <span className="font-semibold">₹{tax}</span>
               </div>
               <div className="border-t border-gray-200 pt-3">
                 <div className="flex justify-between text-lg font-bold">
                   <span>Total</span>
-                  <span>${total}</span>
+                  <span>₹{total}</span>
                 </div>
               </div>
             </div>

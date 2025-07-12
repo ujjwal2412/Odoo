@@ -6,44 +6,50 @@ const About = () => {
   const values = [
     {
       icon: Award,
-      title: "Premium Quality",
-      description: "We source only the finest materials and work with skilled artisans to create pieces that stand the test of time."
+      title: "Quality Exchange",
+      description: "We ensure all clothing items meet quality standards before they enter our exchange platform."
     },
     {
       icon: Leaf,
       title: "Sustainability",
-      description: "Our commitment to sustainable fashion drives every decision, from material selection to ethical manufacturing."
+      description: "Our platform reduces textile waste by giving unused clothing a second life through community exchange."
     },
     {
       icon: Users,
-      title: "Craftsmanship",
-      description: "Every piece is carefully crafted by experienced artisans who take pride in their attention to detail."
+      title: "Community",
+      description: "Building a community of conscious consumers who value sustainable fashion and responsible consumption."
     },
     {
       icon: Globe,
       title: "Global Impact",
-      description: "We believe fashion should make a positive impact on communities and the environment worldwide."
+      description: "Creating worldwide impact by reducing fashion waste and promoting circular economy principles."
     }
   ];
 
   const team = [
     {
-      name: "Sarah Chen",
-      role: "Creative Director",
-      image: "https://images.unsplash.com/photo-1494790108755-2616b612b830?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80",
-      bio: "With over 15 years in luxury fashion, Sarah brings her vision of timeless elegance to every collection."
+      name: "Prabhjot Singh Assi",
+      role: "Platform Developer",
+      image: "/Prabhjot.png",
+      bio: "Prabhjot leads the technical development of our platform, ensuring seamless user experience for clothing exchanges."
     },
     {
-      name: "Marcus Rodriguez",
-      role: "Head of Design",
-      image: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80",
-      bio: "Marcus combines traditional craftsmanship with modern innovation to create pieces that are both beautiful and functional."
+      name: "Swastik Bansal",
+      role: "Backend Engineer",
+      image: "/Swastik.png",
+      bio: "Swastik develops the robust backend systems that power our point-based redemption and exchange mechanisms."
     },
     {
-      name: "Emma Thompson",
-      role: "Sustainability Director",
-      image: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80",
-      bio: "Emma leads our sustainability initiatives, ensuring our fashion choices contribute to a better world."
+      name: "Yatharth Patankar",
+      role: "UI/UX Designer",
+      image: "/Yatharth.png",
+      bio: "Yatharth designs intuitive interfaces that make clothing exchange simple and enjoyable for our community."
+    },
+    {
+      name: "Ujjwal Seth",
+      role: "Product Manager",
+      image: "/Ujjwal.png",
+      bio: "Ujjwal oversees product strategy and ensures our platform meets the needs of sustainable fashion enthusiasts."
     }
   ];
 
@@ -64,7 +70,7 @@ const About = () => {
             Our Story
           </h1>
           <p className="text-xl md:text-2xl font-light max-w-2xl mx-auto animate-fade-in" style={{ animationDelay: '200ms' }}>
-            Crafting timeless elegance through sustainable luxury fashion since 2015
+            Promoting sustainable fashion through clothing exchange and reuse
           </p>
         </div>
       </section>
@@ -74,17 +80,17 @@ const About = () => {
         <div className="max-w-4xl mx-auto">
           <div className="text-center mb-16">
             <h2 className="text-4xl md:text-5xl font-bold text-black mb-8">
-              The ÉLITE Story
+              The ReWear Story
             </h2>
             <div className="prose prose-lg mx-auto text-gray-600 leading-relaxed">
               <p className="text-xl mb-8">
-                Founded in 2015 by a group of passionate designers and sustainability advocates, ÉLITE was born from the belief that luxury fashion should be both beautiful and responsible.
+                ReWear is a web-based platform that enables users to exchange unused clothing through direct swaps or a point-based redemption system.
               </p>
               <p className="text-lg mb-8">
-                Our journey began in a small atelier in Milan, where we partnered with local artisans who shared our vision of creating exceptional pieces without compromising on ethical values. Today, we continue to honor that commitment while expanding our reach globally.
+                The goal is to promote sustainable fashion and reduce textile waste by encouraging users to reuse wearable garments instead of discarding them.
               </p>
               <p className="text-lg">
-                Every piece in our collection tells a story—of skilled hands that crafted it, of sustainable materials carefully sourced, and of timeless design that transcends fleeting trends. We believe that true luxury lies not just in the final product, but in the conscious choices made throughout the entire creation process.
+                Our platform connects conscious consumers who want to give their unused clothing a second life while discovering new pieces for their wardrobe. Through innovative exchange mechanisms, we're building a community that values sustainability and responsible consumption.
               </p>
             </div>
           </div>
@@ -129,27 +135,27 @@ const About = () => {
               Meet Our Team
             </h2>
             <p className="text-xl text-gray-600 max-w-2xl mx-auto">
-              The creative minds behind ÉLITE
+              The creative minds behind ReWear
             </p>
           </div>
           
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
             {team.map((member, index) => (
               <div
                 key={member.name}
                 className="text-center animate-fade-in"
                 style={{ animationDelay: `${index * 150}ms` }}
               >
-                <div className="w-64 h-64 mx-auto mb-6 overflow-hidden rounded-full">
+                <div className="w-48 h-48 mx-auto mb-6 overflow-hidden rounded-full">
                   <img
                     src={member.image}
                     alt={member.name}
                     className="w-full h-full object-cover"
                   />
                 </div>
-                <h3 className="text-2xl font-semibold text-black mb-2">{member.name}</h3>
-                <p className="text-lg text-gray-600 mb-4">{member.role}</p>
-                <p className="text-gray-600 leading-relaxed max-w-sm mx-auto">{member.bio}</p>
+                <h3 className="text-xl font-semibold text-black mb-2">{member.name}</h3>
+                <p className="text-md text-gray-600 mb-4">{member.role}</p>
+                <p className="text-sm text-gray-600 leading-relaxed max-w-xs mx-auto">{member.bio}</p>
               </div>
             ))}
           </div>
@@ -162,28 +168,28 @@ const About = () => {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             <div>
               <h2 className="text-4xl md:text-5xl font-bold text-black mb-8">
-                Our Sustainability Promise
+                Our Platform Promise
               </h2>
               <div className="space-y-6 text-gray-600">
                 <p className="text-lg">
-                  At ÉLITE, we believe that luxury and sustainability are not mutually exclusive. Our commitment to the environment and ethical practices is woven into every aspect of our business.
+                  At ReWear, we believe in making sustainable fashion accessible to everyone. Our platform connects users who want to give their unused clothing a second life while discovering new pieces for their wardrobe.
                 </p>
                 <div className="space-y-4">
                   <div className="flex items-start space-x-3">
                     <div className="w-2 h-2 bg-black rounded-full mt-2"></div>
-                    <p><strong>Eco-friendly Materials:</strong> We source organic, recycled, and sustainably produced fabrics.</p>
+                    <p><strong>Direct Swaps:</strong> Exchange clothing directly with other users in your community.</p>
                   </div>
                   <div className="flex items-start space-x-3">
                     <div className="w-2 h-2 bg-black rounded-full mt-2"></div>
-                    <p><strong>Ethical Manufacturing:</strong> Fair wages and safe working conditions for all our partners.</p>
+                    <p><strong>Point System:</strong> Earn points for items you contribute and redeem them for new pieces.</p>
                   </div>
                   <div className="flex items-start space-x-3">
                     <div className="w-2 h-2 bg-black rounded-full mt-2"></div>
-                    <p><strong>Circular Fashion:</strong> Repair, recycle, and upcycle programs for our customers.</p>
+                    <p><strong>Quality Assurance:</strong> All items are reviewed to ensure they meet our quality standards.</p>
                   </div>
                   <div className="flex items-start space-x-3">
                     <div className="w-2 h-2 bg-black rounded-full mt-2"></div>
-                    <p><strong>Carbon Neutral:</strong> Offsetting our carbon footprint through renewable energy and reforestation.</p>
+                    <p><strong>Waste Reduction:</strong> Helping reduce textile waste by keeping wearable garments in circulation.</p>
                   </div>
                 </div>
               </div>
@@ -203,17 +209,17 @@ const About = () => {
       <section className="py-20 px-4">
         <div className="max-w-4xl mx-auto text-center">
           <h2 className="text-4xl md:text-5xl font-bold text-black mb-8">
-            Join Our Journey
+            Join Our Community
           </h2>
           <p className="text-xl text-gray-600 mb-12 max-w-2xl mx-auto">
-            Be part of a fashion revolution that values craftsmanship, sustainability, and timeless style. Discover our latest collection and join the ÉLITE community.
+            Be part of a sustainable fashion revolution. Start exchanging unused clothing and discover new pieces while reducing textile waste. Join the ReWear community today.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <a
               href="/products"
               className="bg-black text-white px-8 py-4 text-lg font-medium hover:bg-gray-800 transition-colors"
             >
-              Shop Collection
+              Start Exchanging
             </a>
             <a
               href="/contact"

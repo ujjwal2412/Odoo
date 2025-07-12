@@ -82,7 +82,7 @@ const Footer = () => {
           {/* Brand */}
           <div className="md:col-span-1">
             <Link to="/" className="inline-block mb-6">
-              <h2 className="text-3xl font-bold">ÉLITE</h2>
+              <h2 className="text-3xl font-bold">ReWear</h2>
             </Link>
             <p className="text-gray-400 mb-6 max-w-sm">
               Crafting timeless elegance through sustainable luxury fashion. Every piece tells a story of conscious design and exceptional quality.

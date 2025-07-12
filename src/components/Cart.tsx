@@ -1,15 +1,20 @@
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Trash2, Plus, Minus, ShoppingBag, ArrowRight } from 'lucide-react';
 
 const Cart = () => {
+  // Scroll to top when component mounts
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   const [cartItems, setCartItems] = useState([
     {
       id: 1,
       name: "Silk Midi Dress",
-      price: 420,
-      originalPrice: 520,
+      price: 2500,
+      originalPrice: 3200,
       image: "https://images.unsplash.com/photo-1515372039744-b8f02a3ae446?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80",
       size: "M",
       color: "Black",
@@ -18,7 +23,7 @@ const Cart = () => {
     {
       id: 2,
       name: "Cashmere Blazer",
-      price: 680,
+      price: 4200,
       image: "https://images.unsplash.com/photo-1594633312681-425c7b97ccd1?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80",
       size: "S",
       color: "Navy",
@@ -56,7 +61,7 @@ const Cart = () => {
   };
 
   const subtotal = cartItems.reduce((sum, item) => sum + (item.price * item.quantity), 0);
-  const shipping = subtotal > 200 ? 0 : 25;
+  const shipping = subtotal > 5000 ? 0 : 100;
   const discountAmount = subtotal * discount;
   const total = subtotal + shipping - discountAmount;
 
@@ -152,15 +157,15 @@ const Cart = () => {
                       <div className="text-right">
                         <div className="flex items-center space-x-2">
                           <span className="text-xl font-bold text-black">
-                            ${(item.price * item.quantity).toFixed(2)}
+                            ₹{(item.price * item.quantity).toFixed(0)}
                           </span>
                           {item.originalPrice && (
                             <span className="text-sm text-gray-500 line-through">
-                              ${(item.originalPrice * item.quantity).toFixed(2)}
+                              ₹{(item.originalPrice * item.quantity).toFixed(0)}
                             </span>
                           )}
                         </div>
-                        <p className="text-sm text-gray-600">${item.price} each</p>
+                        <p className="text-sm text-gray-600">₹{item.price} each</p>
                       </div>
                     </div>
                   </div>
@@ -206,7 +211,7 @@ const Cart = () => {
                   </button>
                 </div>
                 {discount > 0 && (
-                  <p className="text-sm text-green-600 mt-2">
+                  <p className="text-sm text-black mt-2">
                     Promo code applied! {(discount * 100)}% off
                   </p>
                 )}
@@ -216,33 +221,33 @@ const Cart = () => {
               <div className="space-y-3 mb-6">
                 <div className="flex justify-between">
                   <span className="text-gray-600">Subtotal</span>
-                  <span className="font-semibold">${subtotal.toFixed(2)}</span>
+                  <span className="font-semibold">₹{subtotal.toFixed(0)}</span>
                 </div>
                 
                 {discount > 0 && (
-                  <div className="flex justify-between text-green-600">
+                  <div className="flex justify-between text-black">
                     <span>Discount ({(discount * 100)}%)</span>
-                    <span>-${discountAmount.toFixed(2)}</span>
+                    <span>-₹{discountAmount.toFixed(0)}</span>
                   </div>
                 )}
                 
                 <div className="flex justify-between">
                   <span className="text-gray-600">Shipping</span>
                   <span className="font-semibold">
-                    {shipping === 0 ? 'Free' : `$${shipping.toFixed(2)}`}
+                    {shipping === 0 ? 'Free' : `₹${shipping.toFixed(0)}`}
                   </span>
                 </div>
                 
                 {shipping > 0 && (
                   <p className="text-sm text-gray-600">
-                    Free shipping on orders over $200
+                    Free shipping on orders over ₹5000
                   </p>
                 )}
                 
                 <div className="border-t border-gray-200 pt-3">
                   <div className="flex justify-between text-lg font-bold">
                     <span>Total</span>
-                    <span>${total.toFixed(2)}</span>
+                    <span>₹{total.toFixed(0)}</span>
                   </div>
                 </div>
               </div>

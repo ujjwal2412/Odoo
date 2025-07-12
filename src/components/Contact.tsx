@@ -1,8 +1,13 @@
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { MapPin, Phone, Mail, Clock, Send } from 'lucide-react';
 
 const Contact = () => {
+  // Scroll to top when component mounts
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -29,32 +34,32 @@ const Contact = () => {
   const contactInfo = [
     {
       icon: MapPin,
-      title: "Visit Our Showroom",
+      title: "Visit Our Office",
       details: [
-        "123 Fashion Avenue",
-        "New York, NY 10001",
-        "United States"
+        "123 MG Road, Sector 5",
+        "Gurgaon, Haryana 122001",
+        "India"
       ]
     },
     {
       icon: Phone,
       title: "Call Us",
       details: [
-        "+1 (555) 123-4567",
-        "Mon-Fri: 9AM-6PM EST"
+        "+91 98765 43210",
+        "Mon-Fri: 9AM-6PM IST"
       ]
     },
     {
       icon: Mail,
       title: "Email Us",
       details: [
-        "hello@elitafashion.com",
-        "support@elitafashion.com"
+        "hello@rewear.com",
+        "support@rewear.com"
       ]
     },
     {
       icon: Clock,
-      title: "Showroom Hours",
+      title: "Office Hours",
       details: [
         "Monday - Friday: 10AM - 7PM",
         "Saturday: 10AM - 6PM",
@@ -207,7 +212,7 @@ const Contact = () => {
                   <div className="text-center">
                     <MapPin className="h-12 w-12 text-gray-500 mx-auto mb-4" />
                     <p className="text-gray-600">Interactive map would be integrated here</p>
-                    <p className="text-sm text-gray-500 mt-2">123 Fashion Avenue, New York, NY 10001</p>
+                    <p className="text-sm text-gray-500 mt-2">123 MG Road, Sector 5, Gurgaon, Haryana 122001</p>
                   </div>
                 </div>
               </div>

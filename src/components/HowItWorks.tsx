@@ -1,8 +1,35 @@
 
-import React from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Shirt, RefreshCw, Package, Star, Lightbulb } from 'lucide-react';
 
 const HowItWorks = () => {
+  const [visibleSteps, setVisibleSteps] = useState([]);
+  const stepRefs = useRef([]);
+
+  // Scroll to top when component mounts
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          const index = parseInt((entry.target as HTMLElement).dataset.index || '0');
+          if (entry.isIntersecting) {
+            setVisibleSteps(prev => [...new Set([...prev, index])]);
+          }
+        });
+      },
+      { threshold: 0.3 }
+    );
+
+    stepRefs.current.forEach((ref) => {
+      if (ref) observer.observe(ref);
+    });
+
+    return () => observer.disconnect();
+  }, []);
   const steps = [
     {
       icon: <Shirt className="h-12 w-12" />,
@@ -44,36 +71,60 @@ const HowItWorks = () => {
         </div>
 
         {/* Steps */}
-        <div className="space-y-20 mb-20">
-          {steps.map((step, index) => (
-            <div
-              key={step.step}
-              className={`flex flex-col lg:flex-row items-center gap-12 animate-fade-in-up ${
-                index % 2 === 1 ? 'lg:flex-row-reverse' : ''
-              }`}
-              style={{ animationDelay: `${index * 200}ms` }}
-            >
-              <div className="flex-1 text-center lg:text-left">
-                <div className="inline-flex items-center justify-center w-16 h-16 bg-black text-white rounded-full text-xl font-bold mb-6">
-                  {index + 1}
+        <div className="relative">
+          {/* Vertical Line */}
+          <div className="absolute left-1/2 transform -translate-x-1/2 w-1 bg-gray-200 h-full hidden lg:block">
+            <div 
+              className="w-full bg-black transition-all duration-1000 ease-out"
+              style={{ 
+                height: `${(visibleSteps.length / steps.length) * 100}%`,
+                transformOrigin: 'top'
+              }}
+            />
+          </div>
+
+          <div className="space-y-20 mb-20">
+            {steps.map((step, index) => (
+              <div
+                key={step.step}
+                ref={el => stepRefs.current[index] = el}
+                data-index={index}
+                className={`flex flex-col lg:flex-row items-center gap-12 transition-all duration-1000 ${
+                  index % 2 === 1 ? 'lg:flex-row-reverse' : ''
+                } ${
+                  visibleSteps.includes(index) 
+                    ? 'opacity-100 translate-y-0' 
+                    : 'opacity-0 translate-y-10'
+                }`}
+              >
+                <div className="flex-1 text-center lg:text-left">
+                  <div className={`inline-flex items-center justify-center w-16 h-16 text-white rounded-full text-xl font-bold mb-6 transition-all duration-700 ${
+                    visibleSteps.includes(index) ? 'bg-black scale-100' : 'bg-gray-300 scale-75'
+                  }`}>
+                    {index + 1}
+                  </div>
+                  <h2 className="text-3xl md:text-4xl font-bold text-black mb-4">
+                    {step.title}
+                  </h2>
+                  <p className="text-lg text-gray-600 leading-relaxed">
+                    {step.description}
+                  </p>
                 </div>
-                <h2 className="text-3xl md:text-4xl font-bold text-black mb-4">
-                  {step.title}
-                </h2>
-                <p className="text-lg text-gray-600 leading-relaxed">
-                  {step.description}
-                </p>
-              </div>
-              
-              <div className="flex-1 flex justify-center">
-                <div className="p-8 bg-gray-50 rounded-2xl hover:bg-gray-100 transition-all duration-300 hover:scale-105">
-                  <div className="text-black">
-                    {step.icon}
+                
+                <div className="flex-1 flex justify-center">
+                  <div className={`p-8 bg-gray-50 rounded-2xl transition-all duration-700 ${
+                    visibleSteps.includes(index) 
+                      ? 'hover:bg-gray-100 hover:scale-105 transform scale-100' 
+                      : 'scale-75'
+                  }`}>
+                    <div className="text-black">
+                      {step.icon}
+                    </div>
                   </div>
                 </div>
               </div>
-            </div>
-          ))}
+            ))}
+          </div>
         </div>
 
         {/* Bonus Section */}
