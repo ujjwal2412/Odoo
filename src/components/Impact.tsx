@@ -1,36 +1,69 @@
-
-import React from 'react';
+import * as React from 'react';
+import { useEffect } from 'react';
 import { Recycle, Globe, DollarSign, Users, Droplets, Heart } from 'lucide-react';
 
-const Impact = () => {
-  const impactPoints = [
+interface ImpactPoint {
+  icon: React.ReactNode;
+  title: string;
+  description: string;
+}
+
+interface ImpactStat {
+  number: string;
+  label: string;
+  icon: React.ReactNode;
+}
+
+const Impact: React.FC = () => {
+  // Scroll to top when component mounts
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
+  const impactPoints: ImpactPoint[] = [
     {
-      icon: <Recycle className="h-12 w-12" />,
-      title: "♻️ Rethink Fashion, Reduce Waste",
-      description: "Every swap on ReWear keeps wearable clothes out of landfills. That's one less item burned, dumped, or wasted."
+      icon: <Recycle className="h-12 w-12" aria-hidden="true" />,
+      title: "♻ Rethink Fashion, Reduce Waste",
+      description: "Every swap is a fashion statement with a purpose. One less item wasted, one more smile created."
     },
     {
-      icon: <Globe className="h-12 w-12" />,
+      icon: <Globe className="h-12 w-12" aria-hidden="true" />,
       title: "🌍 Real People, Real Change", 
-      description: "ReWear empowers individuals to build a community of conscious consumers, where style meets sustainability—without sacrificing affordability."
+      description: "This isn't some corporate greenwashing talk — it's real folks like you choosing smarter, cooler, more sustainable options."
     },
     {
-      icon: <DollarSign className="h-12 w-12" />,
+      icon: <DollarSign className="h-12 w-12" aria-hidden="true" />,
       title: "💰 Save Money, Stay Stylish",
-      description: "Why buy new when you can swap for free? Refresh your wardrobe as often as you like without breaking the bank."
+      description: "Keep your wardrobe fresh and your wallet happy. Quality fashion doesn't have to break the bank."
     },
     {
-      icon: <Users className="h-12 w-12" />,
+      icon: <Users className="h-12 w-12" aria-hidden="true" />,
       title: "🤝 Build a Culture of Sharing",
-      description: "Every item shared is a step toward a circular economy—where fashion is not disposable but redistributed, reimagined, and reworn."
+      description: "Let's make 'reuse' the new 'new.' More sharing, less hoarding. More love, less landfill."
     }
   ];
 
-  const stats = [
-    { number: "2,700L", label: "Water saved per shirt", icon: <Droplets className="h-6 w-6" /> },
-    { number: "15,000+", label: "Items rescued from landfills", icon: <Recycle className="h-6 w-6" /> },
-    { number: "8,500+", label: "Happy swappers", icon: <Users className="h-6 w-6" /> },
-    { number: "95%", label: "Waste reduction rate", icon: <Globe className="h-6 w-6" /> }
+  const stats: ImpactStat[] = [
+    { 
+      number: "2,700L", 
+      label: "Water saved every time you swap 1 shirt", 
+      icon: <Droplets className="h-6 w-6" aria-hidden="true" /> 
+    },
+    { 
+      number: "1,500+", 
+      label: "Items rescued from landfills", 
+      icon: <Recycle className="h-6 w-6" aria-hidden="true" /> 
+    },
+    { 
+      number: "50+", 
+      label: "Happy swappers", 
+      icon: <Users className="h-6 w-6" aria-hidden="true" /> 
+    },
+    { 
+      number: "95%", 
+      label: "Waste reduction rate", 
+      icon: <Globe className="h-6 w-6" aria-hidden="true" /> 
+    }
   ];
 
   return (
@@ -53,6 +86,8 @@ const Impact = () => {
               key={stat.label}
               className="text-center group hover:scale-105 transition-all duration-300 p-6 bg-gray-50 rounded-2xl hover:bg-gray-100"
               style={{ animationDelay: `${index * 100}ms` }}
+              role="figure"
+              aria-label={`${stat.number} ${stat.label}`}
             >
               <div className="flex justify-center mb-4">
                 <div className="p-3 bg-black text-white rounded-full group-hover:scale-110 transition-transform duration-300">
@@ -72,6 +107,7 @@ const Impact = () => {
               key={point.title}
               className="group p-8 rounded-2xl bg-gray-50 hover:bg-gray-100 transition-all duration-300 hover:scale-105 hover:shadow-lg"
               style={{ animationDelay: `${index * 150}ms` }}
+              role="article"
             >
               <div className="flex items-start space-x-4">
                 <div className="flex-shrink-0 p-3 bg-black text-white rounded-xl group-hover:scale-110 transition-transform duration-300">
@@ -87,15 +123,25 @@ const Impact = () => {
         </div>
 
         {/* Quote Section */}
-        <div className="bg-black text-white rounded-3xl p-12 text-center animate-fade-in-up">
+        <div 
+          className="bg-black text-white rounded-3xl p-12 text-center animate-fade-in-up"
+          role="blockquote"
+        >
           <div className="flex justify-center mb-6">
             <div className="p-4 bg-white text-black rounded-full">
-              <Heart className="h-8 w-8" />
+              <Heart className="h-8 w-8" aria-hidden="true" />
             </div>
           </div>
           <div className="space-y-6">
-            <h3 className="text-2xl md:text-3xl font-bold">✨ One shirt saved = 2,700 liters of water preserved.</h3>
-            <p className="text-xl text-gray-300 italic">💬 Every swap is a story waiting to be worn again.</p>
+            <h3 className="text-2xl md:text-3xl font-bold">💥 You = The Real MVP</h3>
+            <p className="text-xl text-gray-300">
+              You're not just swapping shirts. You're helping the planet, your wallet, and your vibe — all at once.
+            </p>
+            <p className="text-xl text-gray-300">
+              <span className="block">👚 Start Swapping.</span>
+              <span className="block">🚀 Start Saving.</span>
+              <span className="block">🌎 Start Changing the World.</span>
+            </p>
           </div>
         </div>
 
@@ -111,12 +157,14 @@ const Impact = () => {
             <a
               href="/signup"
               className="inline-flex items-center px-8 py-4 bg-black text-white text-lg font-semibold rounded-lg hover:bg-gray-800 transition-all duration-300 hover:scale-105 shadow-lg hover:shadow-xl"
+              role="button"
             >
               Start Swapping
             </a>
             <a
               href="/add-item"
               className="inline-flex items-center px-8 py-4 border-2 border-black text-black text-lg font-semibold rounded-lg hover:bg-black hover:text-white transition-all duration-300 hover:scale-105"
+              role="button"
             >
               List Your First Item
             </a>
