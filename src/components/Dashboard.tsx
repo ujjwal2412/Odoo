@@ -1,26 +1,27 @@
 
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { User, Package, Repeat, Plus, Coins, TrendingUp, Calendar, Clock } from 'lucide-react';
+import { User, Package, Repeat, Plus, Coins, TrendingUp, Calendar, Clock, Search, Settings, Eye, Check, X, Clock3 } from 'lucide-react';
+import { useSwap } from '../hooks/useSwapManager';
 
 const Dashboard = () => {
+  // Scroll to top when component mounts
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
+  const { state, updateSwapStatus } = useSwap();
+  const { swapRequests, userItems } = state;
+
+  const handleSwapAction = (swapId: string, action: 'approved' | 'ongoing' | 'rejected') => {
+    updateSwapStatus(swapId, action, 'Just now');
+  };
+
   const stats = [
     { label: 'Points Balance', value: '1,250', icon: <Coins className="h-6 w-6" /> },
-    { label: 'Items Listed', value: '8', icon: <Package className="h-6 w-6" /> },
-    { label: 'Successful Swaps', value: '15', icon: <Repeat className="h-6 w-6" /> },
+    { label: 'Items Listed', value: userItems.length.toString(), icon: <Package className="h-6 w-6" /> },
+    { label: 'Successful Swaps', value: swapRequests.filter(req => req.status === 'completed').length.toString(), icon: <Repeat className="h-6 w-6" /> },
     { label: 'This Month', value: '+3', icon: <TrendingUp className="h-6 w-6" /> }
-  ];
-
-  const recentItems = [
-    { id: 1, title: 'Vintage Camera', status: 'active', image: '/placeholder.svg', views: 24 },
-    { id: 2, title: 'Designer Jacket', status: 'swapped', image: '/placeholder.svg', views: 18 },
-    { id: 3, title: 'Art Book Collection', status: 'pending', image: '/placeholder.svg', views: 12 }
-  ];
-
-  const recentSwaps = [
-    { id: 1, item: 'Bluetooth Speaker', with: 'Sarah M.', date: '2 days ago', type: 'completed' },
-    { id: 2, item: 'Yoga Mat', with: 'John D.', date: '1 week ago', type: 'ongoing' },
-    { id: 3, item: 'Coffee Maker', with: 'Emma L.', date: '2 weeks ago', type: 'completed' }
   ];
 
   return (
@@ -70,7 +71,7 @@ const Dashboard = () => {
               <Link to="/my-items" className="text-black hover:underline text-sm">View All</Link>
             </div>
             <div className="space-y-4">
-              {recentItems.map((item) => (
+              {userItems.map((item) => (
                 <div key={item.id} className="flex items-center space-x-4 p-3 hover:bg-gray-50 rounded-lg transition-colors">
                   <img
                     src={item.image}
@@ -90,6 +91,16 @@ const Dashboard = () => {
                       <span>{item.views} views</span>
                     </div>
                   </div>
+                  <div className="flex flex-col space-y-2">
+                    <button className="inline-flex items-center px-3 py-1 text-xs font-medium text-blue-600 bg-blue-50 rounded-md hover:bg-blue-100 transition-colors">
+                      <Search className="h-3 w-3 mr-1" />
+                      Look for Swap
+                    </button>
+                    <button className="inline-flex items-center px-3 py-1 text-xs font-medium text-green-600 bg-green-50 rounded-md hover:bg-green-100 transition-colors">
+                      <Coins className="h-3 w-3 mr-1" />
+                      Redeem ({item.points} pts)
+                    </button>
+                  </div>
                 </div>
               ))}
             </div>
@@ -102,22 +113,79 @@ const Dashboard = () => {
               <Link to="/swaps" className="text-black hover:underline text-sm">View All</Link>
             </div>
             <div className="space-y-4">
-              {recentSwaps.map((swap) => (
-                <div key={swap.id} className="flex items-center justify-between p-3 hover:bg-gray-50 rounded-lg transition-colors">
-                  <div>
-                    <h3 className="font-medium text-gray-900">{swap.item}</h3>
-                    <p className="text-sm text-gray-600">with {swap.with}</p>
-                  </div>
-                  <div className="text-right">
-                    <div className={`text-xs px-2 py-1 rounded-full ${
-                      swap.type === 'completed' ? 'bg-green-100 text-green-800' : 'bg-yellow-100 text-yellow-800'
-                    }`}>
-                      {swap.type}
+              {swapRequests.length > 0 ? (
+                swapRequests.map((swap) => (
+                  <div key={swap.id} className="flex items-center justify-between p-4 hover:bg-gray-50 rounded-lg transition-colors border border-gray-100">
+                    <div className="flex items-center space-x-3">
+                      <img
+                        src={swap.productImage}
+                        alt={swap.productName}
+                        className="w-12 h-12 rounded-lg object-cover border"
+                      />
+                      <div>
+                        <h3 className="font-medium text-gray-900">{swap.productName}</h3>
+                        <p className="text-sm text-gray-600">with {swap.requestedWith}</p>
+                        <p className="text-xs text-gray-500 mt-1">{swap.requestDate}</p>
+                      </div>
                     </div>
-                    <p className="text-xs text-gray-500 mt-1">{swap.date}</p>
+                    <div className="flex items-center space-x-3">
+                      <div className={`text-xs px-3 py-1 rounded-full font-medium ${
+                        swap.status === 'completed' ? 'bg-green-100 text-green-800' :
+                        swap.status === 'approved' ? 'bg-blue-100 text-blue-800' :
+                        swap.status === 'ongoing' ? 'bg-yellow-100 text-yellow-800' :
+                        swap.status === 'pending' ? 'bg-orange-100 text-orange-800' :
+                        'bg-red-100 text-red-800'
+                      }`}>
+                        {swap.status}
+                      </div>
+                      
+                      {/* Action buttons for pending swaps */}
+                      {swap.status === 'pending' && (
+                        <div className="flex space-x-1">
+                          <button
+                            onClick={() => handleSwapAction(swap.id, 'approved')}
+                            className="inline-flex items-center px-2 py-1 text-xs font-medium text-green-600 bg-green-50 rounded-md hover:bg-green-100 transition-colors"
+                            title="Accept"
+                          >
+                            <Check className="h-3 w-3" />
+                          </button>
+                          <button
+                            onClick={() => handleSwapAction(swap.id, 'ongoing')}
+                            className="inline-flex items-center px-2 py-1 text-xs font-medium text-yellow-600 bg-yellow-50 rounded-md hover:bg-yellow-100 transition-colors"
+                            title="Mark as Ongoing"
+                          >
+                            <Clock3 className="h-3 w-3" />
+                          </button>
+                          <button
+                            onClick={() => handleSwapAction(swap.id, 'rejected')}
+                            className="inline-flex items-center px-2 py-1 text-xs font-medium text-red-600 bg-red-50 rounded-md hover:bg-red-100 transition-colors"
+                            title="Reject"
+                          >
+                            <X className="h-3 w-3" />
+                          </button>
+                        </div>
+                      )}
+                      
+                      {/* Action button for approved swaps */}
+                      {swap.status === 'approved' && (
+                        <button
+                          onClick={() => handleSwapAction(swap.id, 'ongoing')}
+                          className="inline-flex items-center px-3 py-1 text-xs font-medium text-yellow-600 bg-yellow-50 rounded-md hover:bg-yellow-100 transition-colors"
+                        >
+                          <Clock3 className="h-3 w-3 mr-1" />
+                          Start Swap
+                        </button>
+                      )}
+                    </div>
                   </div>
+                ))
+              ) : (
+                <div className="text-center py-8 text-gray-500">
+                  <Package className="h-12 w-12 mx-auto mb-4 text-gray-300" />
+                  <p>No swap requests yet</p>
+                  <p className="text-sm">Start browsing items to create swap requests!</p>
                 </div>
-              ))}
+              )}
             </div>
           </div>
         </div>

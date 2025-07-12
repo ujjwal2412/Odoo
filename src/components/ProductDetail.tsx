@@ -2,6 +2,7 @@
 import React, { useState, useMemo, useEffect } from 'react';
 import { useParams, Link, Navigate } from 'react-router-dom';
 import { Heart, Share2, Star, Truck, RotateCcw, Shield, Plus, Minus } from 'lucide-react';
+import { useSwap } from '../hooks/useSwapManager';
 
 const ProductDetail = () => {
   const { id } = useParams();
@@ -9,6 +10,7 @@ const ProductDetail = () => {
   const [selectedColor, setSelectedColor] = useState('');
   const [quantity, setQuantity] = useState(1);
   const [currentImage, setCurrentImage] = useState(0);
+  const { addSwapRequest } = useSwap();
 
   // Complete product database - same as ProductListing
   const allProducts = useMemo(() => [
@@ -340,8 +342,30 @@ const ProductDetail = () => {
       alert('Please select size and color');
       return;
     }
-    // Add to cart logic here
-    console.log('Added to cart:', { productId: id, size: selectedSize, color: selectedColor, quantity });
+    
+    if (!product) {
+      alert('Product not found');
+      return;
+    }
+    
+    // Create swap request
+    addSwapRequest({
+      productId: product.id,
+      productName: product.name,
+      productImage: product.image,
+      requestedBy: 'You',
+      requestedWith: 'Product Owner', // In a real app, this would be the actual owner
+      status: 'pending'
+    });
+    
+    alert('Swap request submitted successfully!');
+    console.log('Swap request created for:', { 
+      productId: product.id, 
+      productName: product.name,
+      size: selectedSize, 
+      color: selectedColor, 
+      quantity 
+    });
   };
 
   return (

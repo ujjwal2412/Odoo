@@ -50,6 +50,3 @@ Develop ReWear, a web-based platform that enables users to exchange unused cloth
 - Member 2: Ujjwal Seth
 - Member 3: Swastik Bansal 
 - Member 4: Prabhjot Singh Assi
-
-## Website is hosted at
-
