@@ -19,6 +19,9 @@ import Contact from '../components/Contact';
 import HowItWorks from '../components/HowItWorks';
 import Impact from '../components/Impact';
 import AdminPanel from '../components/admin/AdminPanel';
+import AdminLogin from '../components/admin/AdminLogin';
+import AdminDashboard from '../components/admin/AdminDashboard';
+import AdminRouteGuard from '../components/admin/AdminRouteGuard';
 
 const Index = () => {
   return (
@@ -50,7 +53,14 @@ const Index = () => {
           <Route path="/contact" element={<Contact />} />
           
           {/* Admin routes */}
-          <Route path="/admin" element={<AdminPanel />} />
+          <Route path="/admin" element={<AdminLogin />} />
+          <Route path="/admin/login" element={<AdminLogin />} />
+          <Route path="/admin/dashboard" element={
+            <AdminRouteGuard>
+              <AdminDashboard />
+            </AdminRouteGuard>
+          } />
+          <Route path="/admin/legacy" element={<AdminPanel />} />
         </Routes>
       </main>
       <Footer />
